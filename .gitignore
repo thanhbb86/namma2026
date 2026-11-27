@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Temporary / OS files
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / Secrets / Local backups
+node_modules/
+.env
+.env.*
+credentials.json
+backups/
