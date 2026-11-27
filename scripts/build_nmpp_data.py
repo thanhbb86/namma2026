@@ -14,6 +14,7 @@ import openpyxl
 ROOT_DIR = Path(__file__).resolve().parent.parent
 EXCEL_PATH = ROOT_DIR / "Câu hỏi chuyên môn ôn tập năm 2026.xlsx"
 DATA_DIR = ROOT_DIR / "data"
+EXTRA_DECKS_PATH = DATA_DIR / "extra-decks.json"
 JSON_OUT = DATA_DIR / "nmpp-2026.json"
 JS_OUT = DATA_DIR / "nmpp-2026.js"
 
@@ -243,6 +244,18 @@ def main() -> int:
                 decks.append(deck)
                 total_questions += deck["totalQuestions"]
                 all_warnings.extend(deck["warnings"])
+
+            # Tự động gộp các bộ đề dùng chung (An toàn, Văn hóa Doanh nghiệp) nếu có
+            if EXTRA_DECKS_PATH.exists():
+                extra_decks = json.loads(EXTRA_DECKS_PATH.read_text(encoding="utf-8"))
+                existing_ids = {d["id"] for d in decks}
+                if isinstance(extra_decks, list):
+                    for ed in extra_decks:
+                        if isinstance(ed, dict) and ed.get("id") and ed["id"] not in existing_ids:
+                            decks.append(ed)
+                            existing_ids.add(ed["id"])
+                            total_questions += int(ed.get("totalQuestions", len(ed.get("questions", []))))
+                            all_warnings.extend(ed.get("warnings", []))
 
             payload = {
                 "meta": {

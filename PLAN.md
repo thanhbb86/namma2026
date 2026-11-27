@@ -2,13 +2,15 @@
 
 ## 1. Mục tiêu & Phạm vi (Scope)
 - **Mục đích:** Xây dựng **1 ứng dụng Web/PWA duy nhất** phục vụ ôn tập và thi trắc nghiệm chuyên môn cho nhân sự **Nhà máy Thủy điện Nậm Má (NMPP)**, chạy mượt qua đường link trên **Máy tính/Laptop** và **Smartphone (Android & iOS — hỗ trợ cài ra màn hình chính & thi Offline)**.
-- **Dữ liệu nguồn ban đầu:** File `Câu hỏi chuyên môn ôn tập năm 2026.xlsx` (6 bộ đề chức danh — tổng **1.586 câu hỏi**, tự động bỏ qua sheet `Tổng hợp câu hỏi`):
+- **Dữ liệu nguồn ban đầu:** File `Câu hỏi chuyên môn ôn tập năm 2026.xlsx` (6 bộ đề chức danh — 1.586 câu, tự động bỏ qua sheet `Tổng hợp câu hỏi`) kết hợp 2 bộ đề dùng chung (`data/extra-decks.json` — 485 câu), tổng cộng **8 bộ đề / 2.071 câu hỏi**:
   1. `ĐIỀU HÀNH VIÊN B3` (7 chuyên đề — 208 câu)
   2. `ĐIỀU HÀNH VIÊN B4` (7 chuyên đề — 213 câu)
   3. `ĐIỀU HÀNH VIÊN B5` (7 chuyên đề — 217 câu)
-  4. `TRƯỞNG KÍP B3` (9 chuyên đề — 296 câu)
+  4. `TRƯỞNG KÍP B5` (9 chuyên đề — 334 câu)
   5. `TRƯỞNG KÍP B4` (9 chuyên đề — 318 câu)
-  6. `TRƯỞNG KÍP B5` (9 chuyên đề — 334 câu)
+  6. `TRƯỞNG KÍP B3` (9 chuyên đề — 296 câu)
+  7. `Bộ đề An toàn` (`AN TOAN`, 2 phần — 457 câu)
+  8. `Văn hóa Doanh nghiệp` (`VHDN`, 1 phần — 28 câu, hỗ trợ nhiều đáp án)
 - **Nhận diện & Kế thừa từ ứng dụng mẫu `bhpp-2026`:**
   - Tên ứng dụng: **Quiz Test NMPP 2026** (màu chủ đạo **xanh dương nhạt** — Sky Blue `#38bdf8` / `#0ea5e9`).
   - Giữ nguyên toàn bộ trải nghiệm, tính năng và các bản vá đã khóa (`@FIXED`) từ `bhpp-2026` (không thêm tính năng thừa, không cần đóng gói `.apk` Android).

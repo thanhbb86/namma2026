@@ -3,7 +3,7 @@
 Ứng dụng Web/PWA thi và ôn tập trắc nghiệm chuyên môn cho nhân sự **Nhà máy Thủy điện Nậm Má (NMPP)**, hoạt động mượt mà qua đường link trên **Máy tính/Laptop**, điện thoại **Android** và **iOS** (hỗ trợ cài ra màn hình chính & thi Offline).
 
 ## 1. Chức năng chính
-- **6 bộ đề chuyên môn (1.586 câu hỏi):** Chọn nhanh theo chức danh & bậc (`ĐIỀU HÀNH VIÊN B3–B5`, `TRƯỞNG KÍP B3–B5`).
+- **8 bộ đề (2.071 câu hỏi):** Chọn nhanh theo chức danh & bậc (`ĐIỀU HÀNH VIÊN B3–B5`, `TRƯỞNG KÍP B3–B5`) cùng 2 bộ đề dùng chung (**Bộ đề An toàn** — 457 câu và **Văn hóa Doanh nghiệp** — 28 câu, hỗ trợ câu nhiều đáp án).
 - **2 chế độ làm bài:**
   - **Thi thử:** Đếm ngược thời gian (mặc định 40 câu / 30 phút, Đạt ≥ 80%), nộp bài mới chấm điểm.
   - **Ôn tập:** Xem đáp án đúng/sai ngay lập tức sau khi chọn.
