@@ -7,8 +7,6 @@
   const state = {
     catalog: null, // { meta, decks }
     activeDeck: null,
-    isCustomBank: false,
-    bankUpdatedAt: null,
     settings: null,
     selectedGroup: "ALL",
     selectedMode: "exam",
@@ -20,7 +18,6 @@
     session: null,
     lastResult: null,
     lastConfig: null,
-    pendingImportData: null,
     resultFilter: "all",
   };
 
@@ -77,7 +74,7 @@
   }
 
   function switchView(viewName) {
-    ["home", "quiz", "result", "import", "history"].forEach((v) => {
+    ["home", "quiz", "result", "history"].forEach((v) => {
       const el = $(`view-${v}`);
       if (el) el.classList.toggle("hidden", v !== viewName);
     });
@@ -159,8 +156,7 @@
       state.settings = global.NmppDB.getSettings();
       applySettings();
 
-      const [customRecord, bookmarks, wrongStats] = await Promise.all([
-        global.NmppDB.getCustomDecks(),
+      const [bookmarks, wrongStats] = await Promise.all([
         global.NmppDB.getBookmarks(),
         global.NmppDB.getWrongStats(),
       ]);
@@ -168,14 +164,8 @@
       state.bookmarks = bookmarks;
       state.wrongStats = wrongStats;
 
-      if (customRecord && customRecord.data && Array.isArray(customRecord.data.decks)) {
-        state.catalog = customRecord.data;
-        state.isCustomBank = true;
-        state.bankUpdatedAt = customRecord.updatedAt;
-      } else if (global.NMPP_DATA && Array.isArray(global.NMPP_DATA.decks)) {
+      if (global.NMPP_DATA && Array.isArray(global.NMPP_DATA.decks)) {
         state.catalog = global.NMPP_DATA;
-        state.isCustomBank = false;
-        state.bankUpdatedAt = global.NMPP_DATA.meta?.generatedAt || null;
       } else {
         throw new Error("Không tìm thấy dữ liệu Quiz Test NMPP 2026.");
       }
@@ -684,63 +674,6 @@
       .join("");
   }
 
-  // --- Import View ---
-  function renderImportView() {
-    const meta = state.catalog.meta || {};
-    const defaultCount = global.NMPP_DATA?.decks?.length || state.catalog.decks.length;
-    $("import-current-status").textContent = state.isCustomBank ? "Đã cập nhật" : "Mặc định";
-    $("import-current-info").innerHTML = `
-      <div>• Nguồn: <strong>${escapeHtml(meta.sourceFile || "Câu hỏi chuyên môn ôn tập năm 2026.xlsx")}</strong></div>
-      <div>• Quy mô: <strong>${state.catalog.decks.length}</strong> bộ đề / tổng <strong>${meta.totalQuestions || 0}</strong> câu hỏi</div>
-      <div>• Cập nhật lúc: ${state.bankUpdatedAt ? new Date(state.bankUpdatedAt).toLocaleString("vi-VN") : "Mặc định"}</div>
-    `;
-    const restoreBtn = $("btn-restore-default-bank");
-    restoreBtn.textContent = `↺ Khôi phục bộ đề mặc định ban đầu (${defaultCount} bộ đề)`;
-    restoreBtn.classList.toggle("hidden", !state.isCustomBank);
-    $("import-preview-box").classList.add("hidden");
-    state.pendingImportData = null;
-  }
-
-  async function handleImportFileSelected(file) {
-    if (!file) return;
-    showLoading("Đang phân tích file Excel nhiều sheet...");
-    try {
-      let parsed;
-      if (file.name.toLowerCase().endsWith(".json")) {
-        const json = JSON.parse(await file.text());
-        if (!Array.isArray(json.decks)) throw new Error("File JSON không đúng định dạng Quiz Test NMPP 2026.");
-        parsed = json;
-      } else {
-        parsed = await global.NmppExcelParser.parseMultiSheetExcel(file);
-      }
-
-      state.pendingImportData = parsed;
-      $("import-preview-stats").innerHTML = `
-        <div>• File: <strong>${escapeHtml(file.name)}</strong></div>
-        <div>• Số bộ đề (sheet): <strong>${parsed.decks.length}</strong> bộ đề</div>
-        <div>• Tổng câu hỏi: <strong>${parsed.meta.totalQuestions}</strong> câu</div>
-      `;
-
-      const warnBox = $("import-preview-warnings");
-      if (parsed.warnings && parsed.warnings.length > 0) {
-        warnBox.classList.remove("hidden");
-        warnBox.innerHTML =
-          `<div class="font-bold">Cảnh báo (${parsed.warnings.length}):</div>` +
-          parsed.warnings.slice(0, 20).map((w) => `<div>• ${escapeHtml(w)}</div>`).join("");
-      } else {
-        warnBox.classList.add("hidden");
-      }
-
-      $("import-preview-box").classList.remove("hidden");
-      showToast("Đã phân tích xong file. Bấm Xác nhận để cập nhật.", "success");
-    } catch (err) {
-      showToast(err.message || "Không thể đọc file.", "error");
-    } finally {
-      hideLoading();
-      $("input-import-excel").value = "";
-    }
-  }
-
   async function renderHistoryView() {
     const list = await global.NmppDB.getExamHistory();
     const container = $("history-list");
@@ -774,10 +707,6 @@
     $("btn-logo-home").addEventListener("click", () => {
       renderHome();
       switchView("home");
-    });
-    $("btn-nav-import").addEventListener("click", () => {
-      renderImportView();
-      switchView("import");
     });
     $("btn-nav-history").addEventListener("click", async () => {
       await renderHistoryView();
@@ -1068,48 +997,6 @@
     $("btn-result-home").addEventListener("click", () => {
       renderHome();
       switchView("home");
-    });
-
-    // Import
-    $("btn-import-back").addEventListener("click", () => {
-      renderHome();
-      switchView("home");
-    });
-    $("input-import-excel").addEventListener("change", (e) => {
-      handleImportFileSelected(e.target.files && e.target.files[0]);
-    });
-    $("btn-confirm-import").addEventListener("click", async () => {
-      if (!state.pendingImportData) return;
-      showLoading("Đang cập nhật toàn bộ đề...");
-      try {
-        const record = await global.NmppDB.saveCustomDecks(state.pendingImportData);
-        state.catalog = record.data;
-        state.isCustomBank = true;
-        state.bankUpdatedAt = record.updatedAt;
-        state.pendingImportData = null;
-        selectDeck(state.catalog.decks[0]?.id, true);
-        renderImportView();
-        showToast(`Đã cập nhật ${state.catalog.decks.length} bộ đề!`, "success");
-      } catch (err) {
-        showToast(err.message || "Lỗi lưu dữ liệu.", "error");
-      } finally {
-        hideLoading();
-      }
-    });
-    $("btn-cancel-import").addEventListener("click", () => {
-      state.pendingImportData = null;
-      $("import-preview-box").classList.add("hidden");
-    });
-    $("btn-restore-default-bank").addEventListener("click", async () => {
-      const defaultCount = global.NMPP_DATA?.decks?.length || 0;
-      if (!confirm(`Khôi phục bộ đề mặc định Quiz Test NMPP 2026 (${defaultCount} bộ đề)?`)) return;
-      await global.NmppDB.clearCustomDecks();
-      state.catalog = global.NMPP_DATA;
-      state.isCustomBank = false;
-      state.bankUpdatedAt = global.NMPP_DATA.meta?.generatedAt || null;
-      selectDeck(state.catalog.decks[0]?.id, true);
-      renderImportView();
-      showToast("Đã khôi phục bộ đề mặc định.", "success");
     });
 
     // History & Backup

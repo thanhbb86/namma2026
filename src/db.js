@@ -230,8 +230,7 @@
   }
 
   async function exportAllData() {
-    const [customDecks, history, bookmarksSet, wrongMap] = await Promise.all([
-      getCustomDecks(),
+    const [history, bookmarksSet, wrongMap] = await Promise.all([
       getExamHistory(),
       getBookmarks(),
       getWrongStats(),
@@ -242,7 +241,6 @@
       version: 1,
       exportedAt: new Date().toISOString(),
       settings: getSettings(),
-      customDecks: customDecks ? customDecks.data : null,
       history,
       bookmarks: Array.from(bookmarksSet),
       wrongStats: Array.from(wrongMap.values()),
@@ -253,14 +251,7 @@
     if (!payload || typeof payload !== "object") {
       throw new Error("File sao lưu JSON không hợp lệ.");
     }
-    if (Array.isArray(payload.decks)) {
-      await saveCustomDecks(payload);
-      return { type: "decks" };
-    }
     if (payload.settings) saveSettings(payload.settings);
-    if (payload.customDecks && Array.isArray(payload.customDecks.decks)) {
-      await saveCustomDecks(payload.customDecks);
-    }
     if (Array.isArray(payload.history)) {
       for (const h of payload.history) {
         if (h && h.id) await saveExamHistory(h);

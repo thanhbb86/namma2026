@@ -37,7 +37,6 @@
       },
     };
   </script>
-  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" defer></script>
 </head>
 <body class="bg-brand-50/50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen font-sans antialiased font-normal transition-colors duration-150">
 
@@ -57,11 +56,6 @@
       </button>
 
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
-        <button id="btn-nav-import" type="button" title="Import / Cập nhật toàn bộ đề"
-          class="px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-brand-50 hover:bg-brand-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-brand-700 dark:text-brand-300 border border-brand-200/70 dark:border-slate-700 transition">
-          <span class="hidden sm:inline">📥 Import đề</span>
-          <span class="sm:hidden">📥 Đề</span>
-        </button>
         <button id="btn-nav-history" type="button" title="Lịch sử & Sao lưu"
           class="px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-brand-50 hover:bg-brand-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-brand-700 dark:text-brand-300 border border-brand-200/70 dark:border-slate-700 transition">
           <span class="hidden sm:inline">📊 Lịch sử</span>
@@ -331,54 +325,7 @@
       </div>
     </section>
 
-    <!-- ==================== VIEW 4: IMPORT ĐỀ NHIỀU SHEET ==================== -->
-    <section id="view-import" class="hidden space-y-5">
-      <div class="flex items-center justify-between">
-        <h2 class="text-lg sm:text-xl font-bold">Cập nhật bộ đề Quiz Test NMPP 2026</h2>
-        <button id="btn-import-back" type="button" class="px-3 py-1.5 rounded-lg text-sm font-semibold bg-brand-50 dark:bg-slate-800 text-brand-700 dark:text-slate-200">← Trang chủ</button>
-      </div>
-
-      <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-brand-200/70 dark:border-slate-800 shadow-sm space-y-2">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Ngân hàng đề hiện tại</span>
-          <span id="import-current-status" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-100 text-brand-700">Mặc định</span>
-        </div>
-        <div id="import-current-info" class="text-sm text-slate-700 dark:text-slate-200 space-y-1"></div>
-        <div class="pt-2">
-          <button id="btn-restore-default-bank" type="button" class="hidden px-3.5 py-2 rounded-xl text-xs font-semibold bg-amber-100 hover:bg-amber-200 text-amber-800">
-            ↺ Khôi phục bộ đề mặc định ban đầu
-          </button>
-        </div>
-      </div>
-
-      <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border border-brand-200/70 dark:border-slate-800 shadow-sm space-y-4">
-        <div>
-          <h3 class="font-bold text-base">Import file Excel nhiều sheet (.xlsx)</h3>
-          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Ứng dụng sẽ tự động đọc toàn bộ các sheet đề thi trong file Excel (mỗi sheet là 1 bộ đề theo chức danh) để cập nhật lại danh sách đề cho nhân sự nhà máy.
-          </p>
-        </div>
-
-        <label class="block border-2 border-dashed border-brand-300 dark:border-slate-700 hover:border-brand-500 rounded-2xl p-6 text-center cursor-pointer transition bg-brand-50/40 dark:bg-slate-800/30">
-          <input id="input-import-excel" type="file" accept=".xlsx,.xls,.json" class="hidden" />
-          <div class="text-3xl mb-2">📂</div>
-          <div class="font-semibold text-sm sm:text-base">Chạm để chọn file Excel (.xlsx) hoặc JSON</div>
-          <div class="text-xs text-slate-400 mt-1">Hoạt động trực tiếp trên cả Máy tính và Smartphone</div>
-        </label>
-
-        <div id="import-preview-box" class="hidden rounded-2xl border border-brand-200 dark:border-brand-800 bg-brand-50/70 dark:bg-brand-950/20 p-4 space-y-3">
-          <div class="font-bold text-sm text-brand-700 dark:text-brand-300">Kết quả phân tích file:</div>
-          <div id="import-preview-stats" class="text-sm space-y-1"></div>
-          <div id="import-preview-warnings" class="hidden text-xs bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 p-3 rounded-xl max-h-36 overflow-y-auto space-y-1"></div>
-          <div class="flex flex-wrap gap-2 pt-1">
-            <button id="btn-confirm-import" type="button" class="px-4 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-sm">✓ Xác nhận cập nhật toàn bộ</button>
-            <button id="btn-cancel-import" type="button" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 font-semibold text-sm">Hủy</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== VIEW 5: LỊCH SỬ & SAO LƯU ==================== -->
+    <!-- ==================== VIEW 4: LỊCH SỬ & SAO LƯU ==================== -->
     <section id="view-history" class="hidden space-y-5">
       <div class="flex items-center justify-between">
         <h2 class="text-lg sm:text-xl font-bold">Lịch sử thi & Sao lưu dữ liệu</h2>
@@ -388,7 +335,7 @@
       <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-brand-200/70 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-3">
         <div>
           <h3 class="font-bold text-sm sm:text-base">Đồng bộ & Sao lưu (JSON)</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Xuất toàn bộ bộ đề, lịch sử thi và câu đánh dấu để chuyển sang thiết bị khác.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Xuất toàn bộ lịch sử thi, câu hay sai và câu đánh dấu để chuyển sang thiết bị khác.</p>
         </div>
         <div class="flex flex-wrap gap-2">
           <button id="btn-export-json" type="button" class="px-3.5 py-2 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-semibold text-xs sm:text-sm">⬇ Xuất sao lưu JSON</button>
@@ -432,7 +379,6 @@
   <script src="./data/nmpp-2026.js"></script>
   <script src="./src/quiz-engine.js"></script>
   <script src="./src/db.js"></script>
-  <script src="./src/excel-parser.js"></script>
   <script src="./src/app.js"></script>
   <script>
     if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {

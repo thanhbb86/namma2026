@@ -19,7 +19,7 @@
   2. Chọn chế độ **Thi thử** (mặc định 40 câu / 30 phút, Đạt ≥ 80%, nộp bài mới chấm) hoặc **Ôn tập** (xem đáp án đúng/sai ngay lập tức); hỗ trợ cả câu **1 đáp án** và **nhiều đáp án (`A–L`)**.
   3. Cấu hình tổng số câu trong 1 đề và phân bổ theo **tỷ lệ (%) từng chương** (*Tỷ lệ thực tế* hoặc *Chia đều*, thuật toán Hamilton `computeRatioCounts`), giữ nguyên thứ tự chuyên đề `I → II → III...`.
   4. Xáo trộn câu hỏi trong từng chuyên đề & xáo trộn đáp án an toàn (tự động ánh xạ chữ cái tham chiếu chéo `Phương án A và C đúng`, giữ phương án tổng hợp `Tất cả đều đúng/sai` ở cuối, giữ nguyên thứ tự khi gặp `phương án trên/dưới`).
-  5. Import cập nhật lại toàn bộ bộ đề trực tiếp từ file `.xlsx`/`.json` ngay trên trình duyệt (SheetJS), ôn nhanh **Câu hay sai** / **Đã đánh dấu**, và **Xuất/Nhập sao lưu JSON**.
+  5. Ôn nhanh **Câu hay sai** / **Đã đánh dấu**, lưu lịch sử làm bài và **Xuất/Nhập sao lưu JSON** cá nhân (bỏ chức năng Import đề cục bộ trên giao diện người dùng để quản lý tập trung qua GitHub).
 
 ---
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = "quiz-nmpp-2026-v3";
+const CACHE_NAME = "quiz-nmpp-2026-v4";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -9,7 +9,6 @@ const CORE_ASSETS = [
   "./data/nmpp-2026.js",
   "./src/styles.css",
   "./src/db.js",
-  "./src/excel-parser.js",
   "./src/quiz-engine.js",
   "./src/app.js",
 ];
