@@ -6,7 +6,7 @@ window.NMPP_DATA = {
     "sourceFile": "Câu hỏi chuyên môn ôn tập năm 2026.xlsx",
     "totalDecks": 8,
     "totalQuestions": 2071,
-    "generatedAt": "2026-11-27T03:37:36.344064+00:00"
+    "generatedAt": "2026-11-27T04:45:05.221077+00:00"
   },
   "decks": [
     {
@@ -2995,7 +2995,7 @@ window.NMPP_DATA = {
               "text": "203,3 A"
             }
           ],
-          "correctIndex": 0,
+          "correctIndex": 1,
           "sourceRow": 551
         },
         {
@@ -8795,7 +8795,7 @@ window.NMPP_DATA = {
               "text": "203,3 A"
             }
           ],
-          "correctIndex": 0,
+          "correctIndex": 1,
           "sourceRow": 576
         },
         {
@@ -14649,7 +14649,7 @@ window.NMPP_DATA = {
               "text": "203,3 A"
             }
           ],
-          "correctIndex": 0,
+          "correctIndex": 1,
           "sourceRow": 586
         },
         {
@@ -23726,7 +23726,7 @@ window.NMPP_DATA = {
               "text": "203,3 A"
             }
           ],
-          "correctIndex": 0,
+          "correctIndex": 1,
           "sourceRow": 1173
         },
         {
@@ -32425,7 +32425,7 @@ window.NMPP_DATA = {
               "text": "203,3 A"
             }
           ],
-          "correctIndex": 0,
+          "correctIndex": 1,
           "sourceRow": 1103
         },
         {
@@ -40530,7 +40530,7 @@ window.NMPP_DATA = {
               "text": "203,3 A"
             }
           ],
-          "correctIndex": 0,
+          "correctIndex": 1,
           "sourceRow": 1003
         },
         {
